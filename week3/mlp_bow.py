@@ -14,7 +14,7 @@ from sklearn.model_selection import GridSearchCV
 #user defined variables
 IMG_SIZE = 256
 DATASET_DIR = '/home/mcv/datasets/MIT_split'
-MODEL_FNAME = '/home/group04/week3/models/patches/mlp_patches.h5'
+MODEL_FNAME = '/home/group04/week3/models/patches/mlp_patches32.h5'
 RESULTS = '/home/group04/week3/results/bow/'
 
 train_images_filenames = pickle.load(open('/home/group04/data/train_images_filenames.dat','rb'))

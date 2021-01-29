@@ -11,8 +11,9 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
 from scipy.misc import imresize
+from sklearn.metrics import accuracy_score
 
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import StandardScaler
 from sklearn import svm
 import pickle as cPickle
 
@@ -20,22 +21,17 @@ import pickle as cPickle
 IMG_SIZE = 32
 
 DATASET_DIR = '/home/mcv/datasets/MIT_split'
-MODEL_FNAME = '/home/group04/week3/models/basic/mlp_basic.h5'
+MODEL_FNAME = '/home/group04/week3/models/multiple_layers/mlp_basic.h5'
 RESULTS = '/home/group04/week3/results/svm/'
 
-#train_images_filenames = cPickle.load(open('/home/group04/data/train_images_filenames.dat','rb'))
-#test_images_filenames = cPickle.load(open('/home/group04/data/test_images_filenames.dat','rb'))
-#train_labels = cPickle.load(open('/home/group04/data/train_labels.dat','rb'))
-#test_labels = cPickle.load(open('/home/group04/data/test_labels.dat','rb'))
-
-
-# Read the train and test files.
-train_images_filenames, train_labels = load_dataset(DATASET_DIR + '/train')
-test_images_filenames, test_labels = load_dataset(DATASET_DIR + '/test')
+train_images_filenames = cPickle.load(open('/home/group04/data/train_images_filenames.dat','rb'))
+test_images_filenames = cPickle.load(open('/home/group04/data/test_images_filenames.dat','rb'))
+train_labels = cPickle.load(open('/home/group04/data/train_labels.dat','rb'))
+test_labels = cPickle.load(open('/home/group04/data/test_labels.dat','rb'))
 
 model = load_model(MODEL_FNAME)
 layer_names=[layer.name for layer in model.layers]
-model_layer = Model(inputs=model.input, outputs=model.get_layer(layer_names[-2]).output)
+model_layer = Model(inputs=model.input, outputs=model.get_layer(layer_names[-4]).output)
 
 model_layer.summary()
 
@@ -60,21 +56,10 @@ for i in range(len(test_images_filenames)):
 
 test_features = np.asarray(test_features)
 
-# scaler = StandardScaler()
-# scaler.fit(train_features)
-# train_features = scaler.transform(train_features)
-# test_features = scaler.transform(test_features)
-
-le = LabelEncoder()
-se = StandardScaler()
-
-le.fit(train_labels)
-train_labels = le.transform(train_labels)
-test_labels = le.transform(test_labels)
-
-se.fit(train_features)
-train_features = se.transform(train_features)
-test_features = se.transform(test_features)
+scaler = StandardScaler()
+scaler.fit(train_features)
+train_features = scaler.transform(train_features)
+test_features = scaler.transform(test_features)
 
 parameters = {'kernel': ('rbf', 'linear', 'sigmoid')}
 grid = GridSearchCV(svm.SVC(), parameters, n_jobs=3, cv=8)

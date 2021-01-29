@@ -19,8 +19,6 @@ import matplotlib.pyplot as plt
 
 import seaborn as sns
 
-from sklearn.metrics import roc_curve, auc
-
 def softmax(x):
     """Compute softmax values for each sets of scores in x."""
     e_x = np.exp(x - np.max(x))
@@ -99,7 +97,9 @@ def save_confusion_matrix(groundtruth, pred, file):
 
     return
 
-def compute_roc(train_features, test_features, train_labels, test_labels, classifier, results_path):
+
+
+def compute_roc(train_features, test_features,train_labels,test_labels, classifier, results_path):
     # first we need to binarize the labels
     y_train = LabelBinarizer().fit_transform(train_labels)
     y_test = LabelBinarizer().fit_transform(test_labels)
@@ -156,3 +156,17 @@ def compute_roc(train_features, test_features, train_labels, test_labels, classi
 
     plt.savefig(results_path)
     plt.close()
+
+def load_dataset(path):
+    filenames, labels = [], []
+    for label in os.listdir(path):
+        label_path = os.path.join(path, label)
+        if not os.path.isdir(label_path):
+            continue
+        for image in os.listdir(label_path):
+            image_path = os.path.join(label_path, image)
+            if not image_path.endswith('.jpg'):
+                continue
+            filenames.append(image_path)
+            labels.append(label)
+    return filenames, labels

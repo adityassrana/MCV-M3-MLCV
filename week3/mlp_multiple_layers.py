@@ -19,9 +19,9 @@ from scipy.misc import imresize
 IMG_SIZE    = 32
 BATCH_SIZE  = 16
 DATASET_DIR = '/home/mcv/datasets/MIT_split'
-WEIGHTS_FNAME = '/home/group04/week3/weights/basic/mlp_basic.h5'
-MODEL_FNAME = '/home/group04/week3/models/basic/mlp_basic.h5'
-RESULTS = '/home/group04/week3/results/basic/'
+WEIGHTS_FNAME = '/home/group04/week3/weights/multiple_layers/mlp_basic.h5'
+MODEL_FNAME = '/home/group04/week3/models/multiple_layers/mlp_basic.h5'
+RESULTS = '/home/group04/week3/results/multiple_layers/'
 
 if not os.path.exists(DATASET_DIR):
   print(Color.RED, 'ERROR: dataset directory '+DATASET_DIR+' do not exists!\n')
@@ -33,6 +33,10 @@ print('Building MLP model...\n')
 model = Sequential()
 model.add(Reshape((IMG_SIZE*IMG_SIZE*3,),input_shape=(IMG_SIZE, IMG_SIZE, 3),name='first'))
 model.add(Dense(units=2048, activation='relu',name='second'))
+model.add(Dense(units=1024, activation='relu',name='third'))
+model.add(Dense(units=512, activation='relu',name='fourth'))
+#model.add(Dense(units=256, activation='relu',name='fifth'))
+#model.add(Dense(units=128, activation='relu',name='sixth'))
 model.add(Dense(units=8, activation='softmax'))
 
 model.compile(loss='categorical_crossentropy',
