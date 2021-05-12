@@ -1,11 +1,11 @@
 # MCV M3 - Machine Learning For Computer Vision
 
-**Final Report** [Arxiv Link](https://arxiv.org/abs/2105.04895)
-
 ## Team Members
 - Aditya Sangram Singh Rana
 - Òscar Lorente Corominas,
 - Ian Riera Smolinska
+
+**Final Report** [Arxiv Link](https://arxiv.org/abs/2105.04895)
 
 ## Link to Slides for each week
 - [Week1](https://github.com/adityassrana/MCV-M3-MLCV/blob/main/week1/week1_BoW.ipynb)
